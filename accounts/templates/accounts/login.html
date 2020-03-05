@@ -1,0 +1,35 @@
+{% extends 'main/base.html' %}
+
+
+{% block content %}
+
+{% load static %}
+<div class="container">
+    <div class="row">
+        <div class="col s12 m12 l8">
+            <div class="card">
+                <h4 class="text-center">Login To Your Account</h4>
+                <div class="card-body">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <label for="username">Username</label>
+                        <input type="text" name="username" class="form-control"><br>
+                
+                        <label for="password">Password</label>
+                        <input type="password" name="password" class="form-control"><br>
+                        <br>
+                        <input type="submit" class="btn btn-danger" value="Login">
+                        <br><br>
+                        {% if error_message %}
+                            <i class="red">Please Check your Username or Password</i>
+                        {% endif %}
+                        <i>Not Registered? Register a Free Account</i><a href="{% url 'accounts:register' %}"> Here!</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'main/base.html' %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col s12 m12 l8">
+            <div class="card">
+                <h4 class="text-center">Register a Free Account</h4>
+                <div class="card-body">
+                    {% if error_message %}
+
+                    <span><i style="color: red;">{{ error_message }}</i></span>
+
+                    {% endif %}
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        {{ form | crispy}}
+                        <br><br>
+                        <input type="submit" class="btn btn-danger" value="Register"><br><br>
+                        <i>Already a Member? Signup</i><a href="{% url 'accounts:login_user' %}"> Here!</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

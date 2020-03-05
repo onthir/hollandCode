@@ -1,0 +1,29 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <h1 class="text-center">{{ questions.holland_code.codeName }}</h1>
+        <div class="col-md-12">
+            
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="form-check">
+                    {% for question in questions %}
+                    <input type="checkbox" class="form-check-input" id="exampleCheck1" name="attributes" value="{{ question.attribute_name }}">
+                    <label class="form-check-label" for="exampleCheck1">{{ question.attribute_name }}</label>
+                    <br>
+                    {% endfor %}  
+                </div>
+                  
+                  <input type="submit" class="btn btn-danger" value="Next">
+            </form>
+            
+        </div>
+
+        
+        
+    </div>
+</div>
+
+{% endblock %}

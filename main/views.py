@@ -15,7 +15,7 @@ def home(request):
             print("Yes")
             # load the last session
             session = sessions.first()
-            return redirect("main:verified")
+            return redirect("main:results")
         else:
             # create new session
             if request.method == "POST":
@@ -277,4 +277,15 @@ def results(request):
         else:
             return redirect("main:home")
 
+# master reset
+def master_reset(request):
+    if request.user.is_authenticated:
+        # get the session
+        session = Session.objects.get(user=request.user)
+
+        # delete it
+        session.delete()
+        return redirect("main:home")
+    else:
+        return redirect("accounts:login")
         

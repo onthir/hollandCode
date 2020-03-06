@@ -24,3 +24,16 @@ p{
 #baseCard{
     background-color: #45a29e;
 }
+
+/* card capsule */
+#capsule{
+    background-color: #45a29e;
+}
+
+#finish{
+    color: gold;
+}
+
+#finish2{
+    color: red;
+}

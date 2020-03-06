@@ -17,4 +17,5 @@ urlpatterns = [
     path('verified/', views.verified, name="verified"),
     path('endTest/', views.endTest, name="end_test"),
     path('results/', views.results, name="results"),
+    path('master-reset/', views.master_reset, name="master_reset")
 ]

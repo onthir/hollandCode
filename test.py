@@ -12,6 +12,6 @@ with open("tools.txt", 'r') as file:
     content = file.readlines()
 
 for line in content:
-    add_to_database(line, 6)
+    add_to_database(line, 1)
     print(line)
 print("Success")

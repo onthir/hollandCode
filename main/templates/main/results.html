@@ -1,0 +1,152 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="text-center">Pie Chart For Test Results</h5>
+                    <canvas id="pie" width="400" height="400"></canvas>
+                    {% include 'main/pie.html' %}
+                </div>
+            </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="text-center">Bar Line</h5>
+                        <canvas id="pie" width="400" height="400"></canvas>
+                        {% include 'main/pie.html' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <br>
+    <!-- create next card -->
+    <div class="card">
+        <div class="card-body">
+            <h2 class="text-center">{{ verdict }}</h2>
+            {% for top in listResults %}
+
+                {% if top == "Realistic" %}
+                <h3 class="text-left"><strong>Realistic</strong></h3>
+                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ea iusto eius corporis eligendi eos distinctio a accusamus architecto et ullam, harum recusandae excepturi? Accusantium quasi odit facilis qui adipisci quisquam.</p>
+                {% endif %}
+
+                {% if top == "Investigative" %}
+                <h3 class="text-left"><strong>Investigative</strong></h3>
+                <p> Investigative: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe neque modi dignissimos vero, dicta hic, illum tempora deleniti et voluptates in. Incidunt unde fugit eligendi. Quae laborum deleniti totam molestias!
+                </p>
+                    {% endif %}
+
+                {% if top == "Artistic" %}
+                <h3 class="text-left"><strong>Artistic</strong></h3>
+                <p>
+                Artistic: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe neque modi dignissimos vero, dicta hic, illum tempora deleniti et voluptates in. Incidunt unde fugit eligendi. Quae laborum deleniti totam molestias!
+            </p>
+                {% endif %}
+
+                {% if top == "Social" %}
+                <h3 class="text-left"><strong>Social</strong></h3>
+                <p>
+                Social: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe neque modi dignissimos vero, dicta hic, illum tempora deleniti et voluptates in. Incidunt unde fugit eligendi. Quae laborum deleniti totam molestias!
+            </p>
+                {% endif %}
+
+                {% if top == "Enterprising" %}
+                <h3 class="text-left"><strong>Enterprising</strong></h3>
+                <p>
+                Enterprising: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe neque modi dignissimos vero, dicta hic, illum tempora deleniti et voluptates in. Incidunt unde fugit eligendi. Quae laborum deleniti totam molestias!
+            </p>
+                {% endif %}
+
+                {% if top == "Conventional" %}
+                <h3 class="text-left"><strong>Conventional</strong></h3>
+                <p>
+                Conventional: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe neque modi dignissimos vero, dicta hic, illum tempora deleniti et voluptates in. Incidunt unde fugit eligendi. Quae laborum deleniti totam molestias!
+            </p>
+                {% endif %}
+            
+                {% endfor %}
+        </div>
+    </div>
+
+    <!-- create another card -->
+    <br>
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+
+            <div class="card">
+                <div class="card-body">
+
+             
+            <h3 class="text-center">Top 5 Majors</h3>
+            <!-- table start -->
+            <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">Major</th>
+                    <th scope="col">Department</th>
+                    <th scope="col">Link</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Computer Science</td>
+                    <td>College Of Business and Social Sciences</td>
+                    <td><a href="https://www.ulm.edu/cbss/computerscience/">Click Here</a></td>
+                  </tr>
+                </tbody>
+              </table>
+            <!-- table end -->
+        </div>
+    </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+
+                
+            <h3 class="text-center">Top 5 Careers</h3>
+            <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">Career</th>
+                    <th scope="col">Associated Major</th>
+                    <th scope="col">Link</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Data Scientist</td>
+                    <td>Computer Science</td>
+                    <td><a href="https://www.ulm.edu/cbss/computerscience/">Click Here</a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+        </div>
+    </div>
+        </div>
+    </div>
+
+    <!-- text cleft -->
+    <div class="text-left">
+        <i>To Explore all Career path for your specified Holland Code. Click <a href="{{ linkBuild }}">Here</a></i>
+    </div>
+</div>
+
+{% endblock %}

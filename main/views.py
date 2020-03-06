@@ -3,6 +3,10 @@ from .models import Attribute, Session
 from .forms import *
 # Create your views here.
 
+def getSession(user):
+    usr = Session.objects.get(user=user)
+    return usr
+
 def home(request):
     # a generic page to ask for user information and create a session under their name
     if request.user.is_authenticated:
@@ -35,11 +39,22 @@ def realisticQ(request):
         # choices for realistic
         realistic = Attribute.objects.filter(holland_code=1)
 
-        # check form
-        if request.method == "POST":
-            attributes = request.POST.getlist("attributes")
+        session = getSession(request.user)
 
-        return render(request, 'main/questions.html', {"questions": realistic})
+        if not session.completed:
+            # check form
+            if request.method == "POST":
+                attributes = request.POST.getlist("attributes")
+                session.rScore = len(attributes)
+                session.save()
+
+                # redirect to the next page i.e investigative
+                return redirect("main:iQ")
+                # print score
+                print(session.rScore)
+            return render(request, 'main/questions.html', {"questions": realistic, "title": "Realistic"})
+        else:
+            return redirect("main:end_test")
     else:
         return redirect("accounts:login_user")
 # investigative
@@ -47,82 +62,113 @@ def investigativeQ(request):
     # choices for realistic
     investigative = Attribute.objects.filter(holland_code=2)
 
-    # check form
-    if request.method == "POST":
-        attributes = request.POST.getlist("attributes")
+    if request.user.is_authenticated:
+        session = getSession(request.user)
 
-    return render(request, 'main/questions.html', {"questions": investigative})
+        if not session.completed:
+            # check form
+            if request.method == "POST":
+                attributes = request.POST.getlist("attributes")
+                session.iScore = len(attributes)
+                session.save()
 
+                return redirect("main:aQ")
+            return render(request, 'main/questions.html', {"questions": investigative, "title": "Investigative"})
+    else:
+        return redirect("accounts:login")
 # artistic
 def artisticQ(request):
     # choices for realistic
     artistic = Attribute.objects.filter(holland_code=3)
 
-    # check form
-    if request.method == "POST":
-        attributes = request.POST.getlist("attributes")
+    # 
+    if request.user.is_authenticated:
+        session = getSession(request.user)
+        
+        if not session.completed:
+            # check form
+            if request.method == "POST":
+                attributes = request.POST.getlist("attributes")
+                session.aScore = len(attributes)
+                session.save()
 
-    return render(request, 'main/questions.html', {"questions": artistic})
+                # 
+                return redirect("main:sQ")
+            return render(request, 'main/questions.html', {"questions": artistic, "title": "Artistic"})
+        else:
+            return redirect("main:end_test")
+    else:
+        return redirect("accounts:home")
 
 # social
 def socialQ(request):
     # choices for realistic
     social = Attribute.objects.filter(holland_code=4)
 
-    # check form
-    if request.method == "POST":
-        attributes = request.POST.getlist("attributes")
-        print(attributes)
+    # check login
+    if request.user.is_authenticated:
+        session = getSession(request.user)
+        if not session.completed:
+            # check form
+            if request.method == "POST":
+                attributes = request.POST.getlist("attributes")
+                session.sScore = len(attributes)
+                session.save()
 
-
-    return render(request, 'main/questions.html', {"questions": social})
+                return redirect("main:eQ")
+            return render(request, 'main/questions.html', {"questions": social, "title": "Social"})
+        else:
+            return redirect("main:end_test")
+    else:
+        return redirect("accounts:login")
 
 # enterprising
 def enterprisingQ(request):
     # choices for realistic
     enterprising = Attribute.objects.filter(holland_code=5)
 
-    # check form
-    if request.method == "POST":
-        attributes = request.POST.getlist("attributes")
+    # check login
+    if request.user.is_authenticated:
+        session = getSession(request.user)
 
-    return render(request, 'main/questions.html', {"questions": enterprising})
+        if not session.completed:
+            # check form
+            if request.method == "POST":
+                attributes = request.POST.getlist("attributes")
+                session.eScore = len(attributes)
+                session.save()
+
+                return redirect("main:cQ")
+            return render(request, 'main/questions.html', {"questions": enterprising, "title": "Enterprising"})
+        else:
+            return redirect("main:end_test")
+    else:
+        return redirect("accounts:login")
 
 # conventional
 def conventionalQ(request):
     # choices for realistic
     conventional = Attribute.objects.filter(holland_code=6)
+    if request.user.is_authenticated:
+        session = getSession(request.user)
 
-    # check form
-    if request.method == "POST":
-        attributes = request.POST.getlist("attributes")
+        if not session.completed:
+            # check form
+            if request.method == "POST":
+                attributes = request.POST.getlist("attributes")
+                session.cScore = len(attributes)
+                session.save()
 
-    return render(request, 'main/questions.html', {"questions": conventional})
-def questions(request):
-    # start session page for the user to test
-    questions = Attribute.objects.all()
-    realistic = Attribute.objects.filter(holland_code=1)
-    investigative = Attribute.objects.filter(holland_code=2)
-    artistic = Attribute.objects.filter(holland_code=3)
-    social = Attribute.objects.filter(holland_code=4)
-    enterprising = Attribute.objects.filter(holland_code=5)
-    conventional = Attribute.objects.filter(holland_code=6)
+                return redirect("main:endTest")
+                # at this point user should have the option to finish the quiz and should be prompted to change everything
+            return render(request, 'main/questions.html', {"questions": conventional, "title": "Conventional"})
+
+        else:
+            return redirect("main:end_test")
+    else:
+        return redirect("accounts:login")
 
 
-    left = [realistic, investigative, artistic, social, enterprising, conventional]
-    for attribute in left:
-        # get all the values form the form submitted
-        if request.method == "POST":
-            # THIS WILL GET ALL THE RECOMMENDAITONS
-            rAttributes = request.POST.getlist('realistic')
-            print(rAttributes)
-            return render(request, "main/questions.html", {"questions": attribute})
-            
-    context = {
-        "questions": realistic,
-        
-    }
-    return render(request, 'main/questions.html', context)
 
 # create session for each session
 def create_session(user, full_name, email):
@@ -145,3 +191,90 @@ def verified(request):
         if sessions.count() >= 1:
             print("Session in Progress")
     return render(request, "main/verified.html")
+
+# ask for whether they want to end the result
+def endTest(request):
+    if request.user.is_authenticated:
+        # get the user's session
+        session = Session.objects.get(user=request.user)
+        if session.completed == True:
+            return redirect("main:results")
+        else:
+            session.completed = True
+            session.save()
+            return redirect("main:results")
+    else:
+        return rediret("accounts:login")
+                # you cannot access this pge
+
+# results page
+def results(request):
+    if request.user.is_authenticated:
+
+        # get the session
+        session = Session.objects.get(user=request.user)
+
+        if session.completed == True:
+            # seperate the results
+            r = session.rScore
+            i = session.iScore
+            a = session.aScore
+            s = session.sScore
+            e = session.eScore
+            c = session.cScore
+            
+            # create the dictionary of the itesms
+            resultQuery = {
+                "Realistic": r,
+                "Investigative": i,
+                "Artistic": a,
+                "Social": s,
+                "Enterprising": e,
+                "Conventional": c
+            }
+            # keys
+            keys = list(resultQuery.keys())
+
+            # values
+            values = list(resultQuery.values())
+        
+
+            reversedScore = sorted(resultQuery.items(), key=lambda kv: kv[1], reverse=True)
+            top3 = reversedScore[:3]
+
+            # create the link
+            linkBuild = "https://www.onetonline.org/explore/interests/"
+
+            # loop 
+            listResults = []
+            for top in top3:
+                first = top[0]
+                linkBuild += first + "/"
+                listResults.append(first)
+            
+            # final verdict result
+            verdict = ''
+            for top in top3:
+                character = top[0]
+                verdict += character.capitalize() + ", "
+
+            verdict = verdict[0:len(verdict)-2]
+
+            # get context to display in the html view page
+            context = {
+                "verdict": verdict,
+                "resultQuery": resultQuery,
+                "listResults": listResults,
+                "session": session,
+                "keys": keys,
+                "values": values,
+                "linkBuild": linkBuild
+            }
+
+            # render the result template
+            return render(request, 'main/results.html', context)
+            # get top three out of the results
+        else:
+            return redirect("main:home")
+
+        

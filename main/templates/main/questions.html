@@ -1,29 +1,49 @@
 {% extends 'main/base.html' %}
 
 {% block content %}
-<div class="container-fluid">
+<div class="container">
     <div class="row">
-        <h1 class="text-center">{{ questions.holland_code.codeName }}</h1>
-        <div class="col-md-12">
-            
-            <form action="" method="POST">
-                {% csrf_token %}
-                <div class="form-check">
-                    {% for question in questions %}
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1" name="attributes" value="{{ question.attribute_name }}">
-                    <label class="form-check-label" for="exampleCheck1">{{ question.attribute_name }}</label>
-                    <br>
-                    {% endfor %}  
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                <h1 class="text-center">{{ title }}</h1>
+                <div class="col-md-12">
+                    
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <div class="form-check">
+                            {% for question in questions %}
+                            <input type="checkbox" class="form-check-input" id="{{ question.attribute_name }}" name="attributes" value="{{ question.attribute_name }}">
+                            <label class="form-check-label" for="{{ question.attribute_name }}">{{ question.attribute_name|title }}</label>
+                            <br>
+                            {% endfor %}  
+                        </div>
+                          <br>
+                          <input type="submit" class="btn btn-danger" value="Next Step">
+                    </form>
+                    
                 </div>
-                  
-                  <input type="submit" class="btn btn-danger" value="Next">
-            </form>
-            
+        
+            </div>
+                
+            </div>
         </div>
 
-        
-        
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="text-center">Navigate To</h3>
+                    <a href="{% url 'main:rQ' %}" class="btn btn-primary">Realistic</a><br><br>
+                    <a href="{% url 'main:iQ' %}" class="btn btn-primary">Investigative</a><br><br>
+                    <a href="{% url 'main:aQ' %}" class="btn btn-primary">Artistic</a><br><br>
+                    <a href="{% url 'main:sQ' %}" class="btn btn-primary">Social</a><br><br>
+                    <a href="{% url 'main:eQ' %}" class="btn btn-primary">Enterprising</a><br><br>
+                    <a href="{% url 'main:cQ' %}" class="btn btn-primary">Conventional</a><br><br>
+                </div>
+            </div>
+        </div>
     </div>
+
 </div>
 
 {% endblock %}

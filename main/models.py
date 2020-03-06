@@ -28,6 +28,7 @@ class Session(models.Model):
     sScore = models.IntegerField(default=0)
     eScore = models.IntegerField(default=0)
     cScore = models.IntegerField(default=0)
+    completed = models.BooleanField(default=False)
 
     def __str__(self):
         return self.full_name

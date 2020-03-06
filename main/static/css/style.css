@@ -1,0 +1,26 @@
+body{
+    background-color: #1F2833;
+}
+
+nav{
+    background-color: #0b0C10;
+}
+
+/* all h3 */
+h3{
+    font-family: 'Roboto Slab', serif;
+}
+
+#brand{
+    font-family: 'Yellowtail', cursive;
+
+}
+
+p{
+    font-family: 'Merriweather', serif;
+
+}
+
+#baseCard{
+    background-color: #45a29e;
+}

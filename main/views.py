@@ -159,7 +159,7 @@ def conventionalQ(request):
                 session.cScore = len(attributes)
                 session.save()
 
-                return redirect("main:endTest")
+                return redirect("main:end_test")
                 # at this point user should have the option to finish the quiz and should be prompted to change everything
             return render(request, 'main/questions.html', {"questions": conventional, "title": "Conventional"})
 
